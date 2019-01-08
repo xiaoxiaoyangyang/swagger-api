@@ -1,0 +1,170 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "规则校验模块",
+    "version": "0.0.1",
+    "title": "Library Auth",
+    "contact": {
+      "name": "lizhengguang",
+      "email": "lizhengguang_vendor@sensetime.com"
+    }
+  },
+  "host": "localhost:10233",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "library-auth-controller",
+      "description": "Library Auth Controller"
+    }
+  ],
+  "paths": {
+    "/api/v1/rule_check": {
+      "post": {
+        "tags": [
+          "library-auth-controller"
+        ],
+        "summary": "规则校验",
+        "operationId": "ruleCheck",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ruleCheckParameter",
+            "description": "ruleCheckParameter",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RuleCheckParameter"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RuleCheckResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "RuleCheckParameter": {
+      "type": "object",
+      "required": [
+        "captureTime",
+        "results",
+        "taskId"
+      ],
+      "properties": {
+        "captureTime": {
+          "type": "string",
+          "description": "处理时间"
+        },
+        "results": {
+          "type": "array",
+          "description": "处理结果",
+          "items": {
+            "$ref": "#/definitions/RuleResult"
+          }
+        },
+        "taskId": {
+          "type": "string",
+          "description": "任务Id"
+        }
+      },
+      "title": "RuleCheckParameter"
+    },
+    "RuleCheckResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "响应code"
+        },
+        "error": {
+          "type": "string",
+          "description": "响应error"
+        },
+        "ruleCheckUserInfo": {
+          "description": "人员信息",
+          "$ref": "#/definitions/RuleCheckUserInfo"
+        }
+      },
+      "title": "RuleCheckResponse",
+      "description": "规则校验响应"
+    },
+    "RuleCheckUserInfo": {
+      "type": "object",
+      "properties": {
+        "ic": {
+          "type": "string",
+          "description": "用户卡号"
+        },
+        "identity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "第三方通过过来的身份ID或者自定义证件号"
+        },
+        "name": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "score": {
+          "type": "number",
+          "format": "float",
+          "description": "最高分"
+        },
+        "targetId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户id"
+        }
+      },
+      "title": "RuleCheckUserInfo"
+    },
+    "RuleResult": {
+      "type": "object",
+      "required": [
+        "colId",
+        "featureId",
+        "score"
+      ],
+      "properties": {
+        "colId": {
+          "type": "string",
+          "description": "静态库id"
+        },
+        "featureId": {
+          "type": "string",
+          "description": "人像特征Id"
+        },
+        "score": {
+          "type": "number",
+          "format": "float",
+          "example": 0,
+          "description": "人像分数"
+        }
+      },
+      "title": "RuleResult"
+    }
+  }
+}

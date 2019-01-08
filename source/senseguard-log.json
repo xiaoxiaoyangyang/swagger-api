@@ -1,0 +1,318 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1.0.0",
+    "title": "SenseGuard Log API",
+    "contact": {
+      "name": "Hyatt",
+      "email": "zhangxuantao@sensetime.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Operation Log Management Module",
+      "description": "Log Controller"
+    }
+  ],
+  "paths": {
+    "/api/v1/logs": {
+      "get": {
+        "tags": [
+          "Operation Log Management Module"
+        ],
+        "summary": "分页查询操作日志列表",
+        "operationId": "queryLogsPageList",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "结束时间，格式为：yyyy-MM-dd HH:mm:ss",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operaName",
+            "in": "query",
+            "description": "操作名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "organId",
+            "in": "query",
+            "description": "组织ID",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "x-example": 1
+          },
+          {
+            "name": "organName",
+            "in": "query",
+            "description": "组织名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "realname",
+            "in": "query",
+            "description": "真实姓名",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "resourceName",
+            "in": "query",
+            "description": "模块名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "每页的数量",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 10
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "开始时间，格式为：yyyy-MM-dd HH:mm:ss",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LogQueryResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/logs/export": {
+      "post": {
+        "tags": [
+          "Operation Log Management Module"
+        ],
+        "summary": "导出操作日志记录",
+        "operationId": "exportLogs",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "param",
+            "description": "param",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LogQueryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "LogQueryRequest": {
+      "type": "object",
+      "required": [
+        "page",
+        "size"
+      ],
+      "properties": {
+        "endTime": {
+          "type": "string",
+          "description": "结束时间，格式为：yyyy-MM-dd HH:mm:ss"
+        },
+        "operaName": {
+          "type": "string",
+          "description": "操作名称"
+        },
+        "organId": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1,
+          "description": "组织ID"
+        },
+        "organName": {
+          "type": "string",
+          "description": "组织名称"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "当前页"
+        },
+        "realname": {
+          "type": "string",
+          "description": "真实姓名"
+        },
+        "resourceName": {
+          "type": "string",
+          "description": "模块名称"
+        },
+        "startTime": {
+          "type": "string",
+          "description": "开始时间，格式为：yyyy-MM-dd HH:mm:ss"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32",
+          "example": 10,
+          "description": "每页的数量"
+        }
+      },
+      "title": "LogQueryRequest"
+    },
+    "LogQueryResponse": {
+      "type": "object",
+      "required": [
+        "page",
+        "pagination",
+        "size",
+        "total",
+        "totalPage"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1,
+          "description": "当前页"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10,
+          "description": "每页数量"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "example": 100,
+          "description": "总记录数"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10,
+          "description": "总页数"
+        },
+        "pagination": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "是否分页，0-不分页，1-分页"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "example": 12,
+          "description": "userId"
+        },
+        "data": {
+          "type": "array",
+          "description": "数据列表",
+          "items": {
+            "$ref": "#/definitions/LogVo"
+          }
+        }
+      },
+      "title": "LogQueryResponse"
+    },
+    "LogVo": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "description": {
+          "type": "string"
+        },
+        "operaName": {
+          "type": "string"
+        },
+        "organName": {
+          "type": "string"
+        },
+        "realname": {
+          "type": "string"
+        },
+        "resourceName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "LogVo"
+    }
+  }
+}

@@ -1,0 +1,456 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "简介商汤科技有限公司SenseGuard开发API集",
+    "version": "v1",
+    "title": "senseguard-target-export",
+    "termsOfService": "http://www.sensetime.com"
+  },
+  "host": "localhost:8088",
+  "basePath": "/swagger",
+  "tags": [
+    {
+      "name": "Target Data Download",
+	  "description":  "Target Data Download"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/api/v1/targetlibrary/buildDownloadData": {
+      "post": {
+        "tags": [
+          "Target Data Download"
+        ],
+        "summary": "请求生成下载数据",
+        "operationId": "buildDownloadData",
+		"consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TargetDownloadSearchParam"
+            }
+          },
+          {
+            "name": "ceshi",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/api/v1/targetlibrary/downloadData": {
+      "get": {
+        "tags": [
+          "Target Data Download"
+        ],
+        "summary": "下载数据",
+        "operationId": "downloadData",
+		"consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "responses": {
+          "201": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/api/v1/targetlibrary/downloadList": {
+      "get": {
+        "tags": [
+          "Target Data Download"
+        ],
+        "summary": "获取下载列表",
+        "operationId": "downloadList",
+		"consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/PageResultTargetDownloadList"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/targetlibrary/errorTargets": {
+      "post": {
+        "tags": [
+          "Target Data Download"
+        ],
+        "summary": "查询人像导入错误列表",
+        "operationId": "errorTargets",
+		"consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TargetDownloadSearchParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/PageResultTargetInfo"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "PageResult": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PageResultTargetDownloadList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TargetDownloadList"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PageResultTargetInfo": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TargetInfo"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TargetDownloadList": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string",
+          "description": "文件名"
+        },
+        "creator": {
+          "type": "string",
+          "description": "创建者"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        }
+      }
+    },
+    "TargetDownloadSearchParam": {
+      "type": "object",
+      "properties": {
+        "libId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像库ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "人像名称"
+        },
+        "creator": {
+          "type": "string",
+          "description": "创建人"
+        },
+        "websocketId": {
+          "type": "string",
+          "description": "SocketID"
+        },
+        "from": {
+          "type": "integer",
+          "format": "int32",
+          "description": "导出开始条数"
+        },
+        "to": {
+          "type": "integer",
+          "format": "int32",
+          "description": "导出结束条数"
+        },
+        "featureStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "导入状态，0失败，1成功"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建开始时间"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建结束时间"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": "导出开始条数"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32",
+          "description": "导出开始条数"
+        }
+      }
+    },
+    "TargetInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像id"
+        },
+        "identity": {
+          "type": "string",
+          "description": "ISMSUsers.xsd中ISMS同步过来的RecordID"
+        },
+        "identityType": {
+          "type": "string",
+          "description": "证件类型A代表ISMS过来的卡号,B代表大陆身份证（可以继续扩展）"
+        },
+        "cardId": {
+          "type": "string",
+          "description": "证件号,ISMS传过来的BadgeID"
+        },
+        "name": {
+          "type": "string",
+          "description": "名字"
+        },
+        "aliasName": {
+          "type": "string",
+          "description": "别名"
+        },
+        "gender": {
+          "type": "integer",
+          "format": "int32",
+          "description": "性别"
+        },
+        "nationality": {
+          "type": "string",
+          "description": "国籍"
+        },
+        "nation": {
+          "type": "string",
+          "description": "民族"
+        },
+        "nativePlace": {
+          "type": "string",
+          "description": "籍贯"
+        },
+        "ic": {
+          "type": "string",
+          "description": "IC卡号"
+        },
+        "dept": {
+          "type": "string",
+          "description": "部门"
+        },
+        "employeeNumber": {
+          "type": "string",
+          "description": "工号"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date",
+          "description": "出生年月"
+        },
+        "address": {
+          "type": "string",
+          "description": "地址"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "转换服务器图片url"
+        },
+        "picUrl": {
+          "type": "string",
+          "description": "图片url"
+        },
+        "picMd5": {
+          "type": "string",
+          "description": "图片 md5"
+        },
+        "activeStatus": {
+          "type": "string",
+          "description": "激活状态"
+        },
+        "activationDate": {
+          "type": "string",
+          "description": "激活时间"
+        },
+        "expirationDate": {
+          "type": "string",
+          "description": "过期时间"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "creator": {
+          "type": "string",
+          "description": "创建人"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        },
+        "libraryCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "总数"
+        },
+        "errPicUrl": {
+          "type": "string",
+          "description": "错误图片url"
+        },
+        "errorImageUrl": {
+          "type": "string",
+          "description": "转换服务器错误图片url"
+        },
+        "featureErrorMsg": {
+          "type": "string",
+          "description": "特征错误信息"
+        },
+        "featureErrorCode": {
+          "type": "integer",
+          "format": "int32",
+          "description": "特征错误码"
+        },
+        "featureStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "状态"
+        }
+      }
+    }
+  }
+}

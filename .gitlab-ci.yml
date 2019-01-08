@@ -1,0 +1,38 @@
+image: registry.sensetime.com/gitlabci/swagger-codegen-cli:v2.3.1
+
+variables:
+    SWAGGER_CODEGEN_CLI_JAR: /swagger-codegen-cli-2.3.1.jar
+
+stages:
+    - build
+    - deploy
+
+generate:
+    stage: build
+    script:
+        - echo "Generating docs & client"
+        - chmod +x mergeSwaggerJson.sh
+        - ./mergeSwaggerJson.sh
+        - tar czvf senseguard-openapi-generated.tar.gz generated
+    artifacts:
+        paths:
+            - senseguard-openapi-generated.tar.gz
+            - generated/senseguard-openapi.swagger.json
+            - generated/index.html
+        expire_in: 7 days
+
+
+pages:
+    stage: deploy
+    dependencies:
+      - generate
+    script:
+        - mkdir .public
+        - cp generated/index.html .public
+        - mv .public public
+    artifacts:
+        paths:
+        - public
+    only:
+        - master
+

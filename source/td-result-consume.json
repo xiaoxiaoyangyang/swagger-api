@@ -1,0 +1,181 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "SenseGuard TD Result Consume",
+        "contact": {
+            "name": "lizhengguang",
+            "email": "lizhengguang_vendor@sensetime.com"
+        }
+    },
+    "host": "localhost:10213",
+    "basePath": "/senseguard-td-result-consume",
+    "tags": [
+        {
+            "name": "TD Records Confirm",
+            "description": "Detect History Controller"
+        }
+    ],
+    "paths": {
+        "/api/v1/histories/view/{id}": {
+            "put": {
+                "tags": [
+                    "TD Records Confirm"
+                ],
+                "summary": "更新查看状态",
+                "operationId": "updateViewStatus",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json;charset=UTF-8"
+                ],
+                "parameters": [
+                    {
+                        "name": "accessToken",
+                        "in": "header",
+                        "description": "accessToken",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "待修改的识别历史id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "detectHistoryRequest",
+                        "description": "detectHistoryRequest",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DetectHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/v1/histories/{id}": {
+            "put": {
+                "tags": [
+                    "TD Records Confirm"
+                ],
+                "summary": "更新确认状态",
+                "operationId": "detectHistoryRequest",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json;charset=UTF-8"
+                ],
+                "parameters": [
+                    {
+                        "name": "accessToken",
+                        "in": "header",
+                        "description": "accessToken",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "待修改的识别历史id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "detectHistoryRequest",
+                        "description": "detectHistoryRequest",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DetectHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "DetectHistoryRequest": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "description": "确认状态"
+                }
+            },
+            "title": "DetectHistoryRequest"
+        },
+        "Result": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "响应Code"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "errorCode": {
+                    "type": "string",
+                    "description": "响应ErrorCode"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "响应消息Message"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "响应结果"
+                }
+            },
+            "title": "Result"
+        }
+    }
+}

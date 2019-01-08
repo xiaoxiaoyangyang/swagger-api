@@ -1,0 +1,1152 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Senseguard-rule-management APIs",
+    "version": "1.0",
+    "title": "Senseguard-rule-management Restful APIs",
+    "contact": {
+      "name": "liufulu",
+      "email": "liufulu_vendor@sensetime.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "senseguard-ac-task",
+      "description": "Ac Task Management Controller"
+    },
+    {
+      "name": "senseguard-td-task",
+      "description": "Td Task Management Controller"
+    }
+  ],
+  "paths": {
+    "/api/v1/ac/task": {
+      "get": {
+        "tags": [
+          "senseguard-ac-task"
+        ],
+        "summary": "分页搜索",
+        "operationId": "queryAcTask",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "description": "搜索关键字",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "每页数量，默认=25",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 25
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码，默认=1",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AcTaskPageResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "senseguard-ac-task"
+        ],
+        "summary": "创建",
+        "operationId": "createAcTask",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "createRequest",
+            "description": "createRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AcTaskCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/ac/task/{task_id}": {
+      "get": {
+        "tags": [
+          "senseguard-ac-task"
+        ],
+        "summary": "查询详情",
+        "operationId": "detailAcTask",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "task_id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AcTaskDetailResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "senseguard-ac-task"
+        ],
+        "summary": "更新任务",
+        "operationId": "updateAcTask",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "task_id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "updateRequest",
+            "description": "updateRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AcTaskUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "senseguard-ac-task"
+        ],
+        "summary": "删除",
+        "operationId": "deleteAcTask",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "task_id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/td/task": {
+      "get": {
+        "tags": [
+          "senseguard-td-task"
+        ],
+        "summary": "分页搜索",
+        "operationId": "queryTdTask",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "description": "搜索关键字",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "每页数量，默认=25",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 25
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码，默认=1",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TdTaskPageResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "senseguard-td-task"
+        ],
+        "summary": "创建",
+        "operationId": "createTdTask",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "createRequest",
+            "description": "createRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TdTaskCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "senseguard-td-task"
+        ],
+        "summary": "更新任务",
+        "operationId": "updateTdTask",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "updateRequest",
+            "description": "updateRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TdTaskUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/td/task/batch": {
+      "post": {
+        "tags": [
+          "senseguard-td-task"
+        ],
+        "summary": "批量创建",
+        "operationId": "batchCreateTdTask",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "batchCreateRequest",
+            "description": "batchCreateRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TdTaskBatchCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/td/task/{task_id}": {
+      "get": {
+        "tags": [
+          "senseguard-td-task"
+        ],
+        "summary": "任务详情",
+        "operationId": "detailTdTask",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "task_id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TdTaskDetailResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "senseguard-td-task"
+        ],
+        "summary": "删除任务",
+        "operationId": "deleteTdTask",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "description": "task_id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "AcTaskCreateRequest": {
+      "type": "object",
+      "properties": {
+        "taskGroup": {
+          "description": "规则组信息",
+          "$ref": "#/definitions/TaskGroupVo"
+        },
+        "taskType": {
+          "type": "integer",
+          "format": "int32",
+          "description": "规则类型"
+        },
+        "deviceId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设备id"
+        },
+        "taskAttributes": {
+          "type": "array",
+          "description": "规则特殊属性",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "threshold": {
+          "type": "number",
+          "format": "float",
+          "example": 0.8,
+          "description": "阈值"
+        },
+        "timezoneLibraryRelation": {
+          "type": "array",
+          "description": "时间段人像库的关系",
+          "items": {
+            "$ref": "#/definitions/TimeZoneLibraryRequest"
+          }
+        }
+      },
+      "title": "AcTaskCreateRequest"
+    },
+    "AcTaskDetailResponse": {
+      "type": "object",
+      "properties": {
+        "deviceVo": {
+          "description": "设备信息",
+          "$ref": "#/definitions/DeviceVo"
+        },
+        "taskAttributeVos": {
+          "type": "array",
+          "description": "任务属性",
+          "items": {
+            "$ref": "#/definitions/TaskAttributeVo"
+          }
+        },
+        "taskGroupVo": {
+          "description": "所在组信息",
+          "$ref": "#/definitions/TaskGroupVo"
+        },
+        "taskId": {
+          "type": "string",
+          "description": "任务id"
+        },
+        "taskName": {
+          "type": "string",
+          "description": "任务名称"
+        },
+        "taskStatus": {
+          "type": "number",
+          "format": "float",
+          "description": "任务状态：0-停止/1-运行"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "float",
+          "description": "阈值"
+        },
+        "timezoneLibraryRelation": {
+          "type": "array",
+          "description": "时间段人像库的关系",
+          "items": {
+            "$ref": "#/definitions/TimeZoneLibraryResponse"
+          }
+        }
+      },
+      "title": "AcTaskDetailResponse"
+    },
+    "AcTaskPageResponse": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "type": "integer",
+          "format": "int64",
+          "description": "当前页"
+        },
+        "list": {
+          "type": "array",
+          "description": "返回列表数据",
+          "items": {
+            "$ref": "#/definitions/AcTaskDetailResponse"
+          }
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64",
+          "description": "每页大小"
+        },
+        "pagination": {
+          "type": "integer",
+          "format": "int32",
+          "description": "是否分页，0-不分页，1-分页"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": "总记录数"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64",
+          "description": "总页数"
+        }
+      },
+      "title": "AcTaskPageResponse"
+    },
+    "AcTaskUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "deviceId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设备id"
+        },
+        "taskAttributes": {
+          "type": "array",
+          "description": "规则特殊属性",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "taskGroupVo": {
+          "description": "规则组信息",
+          "$ref": "#/definitions/TaskGroupVo"
+        },
+        "taskName": {
+          "type": "string",
+          "description": "规则名称"
+        },
+        "taskType": {
+          "type": "integer",
+          "format": "int32",
+          "description": "规则类型"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "float",
+          "example": 0.01,
+          "description": "阈值"
+        },
+        "timezoneLibraryRelation": {
+          "type": "array",
+          "description": "时间段人像库的关系",
+          "items": {
+            "$ref": "#/definitions/TimeZoneLibraryRequest"
+          }
+        }
+      },
+      "title": "AcTaskUpdateRequest"
+    },
+    "DeviceVo": {
+      "type": "object",
+      "properties": {
+        "deviceGroup": {
+          "type": "string",
+          "description": "设备所在组名"
+        },
+        "deviceId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设备id"
+        },
+        "deviceName": {
+          "type": "string",
+          "description": "设备名称"
+        }
+      },
+      "title": "DeviceVo"
+    },
+    "FaceInfoVo": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "description": "人脸高度"
+        },
+        "pointVos": {
+          "type": "array",
+          "description": "人脸坐标：左上和右下",
+          "items": {
+            "$ref": "#/definitions/PointVo"
+          }
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "description": "人脸宽度"
+        }
+      },
+      "title": "FaceInfoVo"
+    },
+    "HotRegionVo": {
+      "type": "object",
+      "properties": {
+        "hotRegionPoints": {
+          "type": "array",
+          "description": "热区信息",
+          "items": {
+            "$ref": "#/definitions/PointVo"
+          }
+        },
+        "maxFace": {
+          "description": "小脸信息",
+          "$ref": "#/definitions/FaceInfoVo"
+        },
+        "minFace": {
+          "description": "大脸信息",
+          "$ref": "#/definitions/FaceInfoVo"
+        }
+      },
+      "title": "HotRegionVo"
+    },
+    "LibraryVo": {
+      "type": "object",
+      "properties": {
+        "libraryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像库id"
+        },
+        "libraryName": {
+          "type": "string",
+          "description": "人像库名称"
+        }
+      },
+      "title": "LibraryVo"
+    },
+    "PointVo": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer",
+          "format": "int32",
+          "description": "x轴坐标"
+        },
+        "y": {
+          "type": "integer",
+          "format": "int32",
+          "description": "y轴坐标"
+        }
+      },
+      "title": "PointVo"
+    },
+    "TaskAttributeVo": {
+      "type": "object",
+      "properties": {
+        "taskAttributeId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "任务特殊属性id"
+        },
+        "taskAttributeName": {
+          "type": "string",
+          "description": "任务特殊属性名称"
+        }
+      },
+      "title": "TaskAttributeVo"
+    },
+    "TaskGroupVo": {
+      "type": "object",
+      "properties": {
+        "taskGroupId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "组id"
+        },
+        "taskGroupName": {
+          "type": "string",
+          "description": "组名称"
+        }
+      },
+      "title": "TaskGroupVo"
+    },
+    "TdTaskBatchCreateRequest": {
+      "type": "object",
+      "properties": {
+        "deviceIds": {
+          "type": "array",
+          "description": "监控设备ids",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "libraryIds": {
+          "type": "array",
+          "description": "人像库ids",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "taskGroup": {
+          "description": "规则组信息",
+          "$ref": "#/definitions/TaskGroupVo"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "float",
+          "example": 0.01,
+          "description": "阈值"
+        }
+      },
+      "title": "TdTaskBatchCreateRequest"
+    },
+    "TdTaskCreateRequest": {
+      "type": "object",
+      "properties": {
+        "deviceId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "监控设备id"
+        },
+        "hotRegionVo": {
+          "description": "热区信息",
+          "$ref": "#/definitions/HotRegionVo"
+        },
+        "keeperTaskIds": {
+          "type": "array",
+          "description": "关联keeper规则ids",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "libraryIds": {
+          "type": "array",
+          "description": "人像库ids",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "taskAttributes": {
+          "type": "array",
+          "description": "规则特殊属性",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "taskGroup": {
+          "description": "规则组信息",
+          "$ref": "#/definitions/TaskGroupVo"
+        },
+        "taskType": {
+          "type": "integer",
+          "format": "int32",
+          "description": "规则类型"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "float",
+          "example": 0.01,
+          "description": "阈值"
+        }
+      },
+      "title": "TdTaskCreateRequest"
+    },
+    "TdTaskDetailResponse": {
+      "type": "object",
+      "properties": {
+        "bindAcTasks": {
+          "type": "array",
+          "description": "关联的Ac任务",
+          "items": {
+            "$ref": "#/definitions/AcTaskDetailResponse"
+          }
+        },
+        "deviceVo": {
+          "description": "设备信息",
+          "$ref": "#/definitions/DeviceVo"
+        },
+        "taskAttributeVos": {
+          "type": "array",
+          "description": "任务属性",
+          "items": {
+            "$ref": "#/definitions/TaskAttributeVo"
+          }
+        },
+        "taskGroupVo": {
+          "description": "所在组信息",
+          "$ref": "#/definitions/TaskGroupVo"
+        },
+        "taskId": {
+          "type": "string",
+          "description": "任务id"
+        },
+        "taskName": {
+          "type": "string",
+          "description": "任务名称"
+        },
+        "taskStatus": {
+          "type": "number",
+          "format": "float",
+          "description": "任务状态：0-停止/1-运行"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "float",
+          "description": "阈值"
+        }
+      },
+      "title": "TdTaskDetailResponse"
+    },
+    "TdTaskPageResponse": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "type": "integer",
+          "format": "int64",
+          "description": "当前页"
+        },
+        "list": {
+          "type": "array",
+          "description": "返回列表数据",
+          "items": {
+            "$ref": "#/definitions/TdTaskDetailResponse"
+          }
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64",
+          "description": "每页大小"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": "总记录数"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64",
+          "description": "总页数"
+        }
+      },
+      "title": "TdTaskPageResponse"
+    },
+    "TdTaskUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "deviceId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "监控设备id"
+        },
+        "hotRegionVo": {
+          "description": "热区信息",
+          "$ref": "#/definitions/HotRegionVo"
+        },
+        "keeperTaskIds": {
+          "type": "array",
+          "description": "关联keeper规则ids",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "libraryIds": {
+          "type": "array",
+          "description": "人像库ids",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "taskAttributes": {
+          "type": "array",
+          "description": "规则特殊属性",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "taskId": {
+          "type": "string",
+          "description": "规则id"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "float",
+          "example": 0.01,
+          "description": "阈值"
+        }
+      },
+      "title": "TdTaskUpdateRequest"
+    },
+    "TimeZoneLibraryRequest": {
+      "type": "object",
+      "properties": {
+        "timezoneId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "timezone的id"
+        },
+        "libraryIds": {
+          "type": "array",
+          "description": "与timezoneId关联的人像库ids",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "TimeZoneLibraryRequest"
+    },
+    "TimeZoneLibraryResponse": {
+      "type": "object",
+      "properties": {
+        "libraryVos": {
+          "type": "array",
+          "description": "与timezone关联的人像库",
+          "items": {
+            "$ref": "#/definitions/LibraryVo"
+          }
+        },
+        "timezoneVo": {
+          "description": "timezone信息",
+          "$ref": "#/definitions/TimezoneVo"
+        }
+      },
+      "title": "TimeZoneLibraryResponse"
+    },
+    "TimezoneVo": {
+      "type": "object",
+      "properties": {
+        "timezoneId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "timezone的id"
+        },
+        "timezoneName": {
+          "type": "string",
+          "description": "timezone的名称"
+        }
+      },
+      "title": "TimezoneVo"
+    }
+  }
+}

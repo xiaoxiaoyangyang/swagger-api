@@ -1,0 +1,9 @@
+myconfig:
+    LimitCount: 50
+    destPath: "generated/"
+    srcPath: "source/"
+    fileName: "senseguard-openapi.swagger.json"
+
+
+
+

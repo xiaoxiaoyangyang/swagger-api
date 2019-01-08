@@ -1,0 +1,455 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Ac Result Consume",
+    "version": "1.0",
+    "title": "Ac Result Consume",
+    "contact": {
+      "name": "lizhengguang",
+      "email": "lizhengguang_vendor@sensetime.com"
+    }
+  },
+  "host": "localhost:10214",
+  "basePath": "/senseguard-ac-result-consume",
+  "tags": [
+    {
+      "name": "ac-detect-info-controller",
+      "description": "ac识别历史模块"
+    }
+  ],
+  "paths": {
+    "/api/v1/ac/histories/{id}": {
+      "put": {
+        "tags": [
+          "ac-detect-info-controller"
+        ],
+        "summary": "确认状态的更新",
+        "operationId": "updateHistoryRecords",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*",
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "acDetectInfoRequest",
+            "description": "acDetectInfoRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AcDetectInfoRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AcDetectInfo"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/v1/histories/{id}": {
+      "get": {
+        "tags": [
+          "ac-detect-info-controller"
+        ],
+        "summary": "根据id查询单条记录",
+        "operationId": "getAcDetectInfo",
+        "produces": [
+          "*/*",
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AcDetectInfo"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AcAngle": {
+      "type": "object",
+      "properties": {
+        "pitch": {
+          "type": "number",
+          "format": "float",
+          "example": 0,
+          "description": "人脸俯仰变化角度"
+        },
+        "roll": {
+          "type": "number",
+          "format": "float",
+          "example": 0,
+          "description": "人脸平面旋转角度"
+        },
+        "yaw": {
+          "type": "number",
+          "format": "float",
+          "example": 0,
+          "description": "人脸姿态变化角度"
+        }
+      },
+      "title": "AcAngle"
+    },
+    "AcDetectInfo": {
+      "type": "object",
+      "properties": {
+        "captureDate": {
+          "type": "string",
+          "description": "抓拍日期(实际存入是将是receiveTime)"
+        },
+        "captureTime": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0,
+          "description": "captureTime:抓拍时间戳(实际存入的将是receiveTime)"
+        },
+        "comparedType": {
+          "type": "string",
+          "description": "比对结果"
+        },
+        "confirmInfo": {
+          "description": "confirmInfo",
+          "$ref": "#/definitions/ConfirmInfo"
+        },
+        "description": {
+          "type": "string"
+        },
+        "deviceInfo": {
+          "description": "deviceInfo",
+          "$ref": "#/definitions/DeviceInfo"
+        },
+        "faceInfo": {
+          "$ref": "#/definitions/FaceInfo"
+        },
+        "id": {
+          "type": "string",
+          "example": 0,
+          "description": "id"
+        },
+        "libraryInfo": {
+          "description": "libraryInfo",
+          "$ref": "#/definitions/LibraryInfo"
+        },
+        "panoramicImage": {
+          "description": "panoramicImage",
+          "$ref": "#/definitions/AcImage"
+        },
+        "receiveTime": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0,
+          "description": "接收到kafka的时间(实际存入的将是captureTime)"
+        },
+        "score": {
+          "type": "number",
+          "format": "float",
+          "example": 0,
+          "description": "分数"
+        },
+        "status": {
+          "type": "string",
+          "description": "比对结果, \"0\":陌生人 ,\"1\"：员工正常 , \"2\"：员工异常"
+        },
+        "targetInfo": {
+          "description": "confirmInfo",
+          "$ref": "#/definitions/TargetInfo"
+        }
+      },
+      "title": "AcDetectInfo"
+    },
+    "AcDetectInfoRequest": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      },
+      "title": "AcDetectInfoRequest"
+    },
+    "AcImage": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "example": 0,
+          "description": "图片的高度"
+        },
+        "url": {
+          "type": "string",
+          "example": 0,
+          "description": "图片的url地址"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "example": 0,
+          "description": "图片的宽度"
+        }
+      },
+      "title": "AcImage"
+    },
+    "AcVertex": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer",
+          "format": "int32",
+          "example": 0,
+          "description": "x轴坐标"
+        },
+        "y": {
+          "type": "integer",
+          "format": "int32",
+          "example": 0,
+          "description": "y轴坐标"
+        }
+      },
+      "title": "AcVertex"
+    },
+    "ConfirmInfo": {
+      "type": "object",
+      "properties": {
+        "confirmTime": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0,
+          "description": "确定时间"
+        },
+        "name": {
+          "type": "string",
+          "description": "name"
+        },
+        "status": {
+          "type": "string",
+          "description": "比对结果是否被确认,\"0\"表示未确认,\"1\"表示被确认"
+        }
+      },
+      "title": "ConfirmInfo"
+    },
+    "DeviceInfo": {
+      "type": "object",
+      "properties": {
+        "deviceId": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0,
+          "description": "设备的唯一标识"
+        },
+        "deviceName": {
+          "type": "string",
+          "description": "设备的名称"
+        },
+        "groupId": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0,
+          "description": "设备所在组id"
+        },
+        "groupName": {
+          "type": "string"
+        },
+        "placeName": {
+          "type": "string",
+          "description": "设备所在区域名"
+        },
+        "tollgateName": {
+          "type": "string",
+          "description": "摄像头所在卡口名"
+        }
+      },
+      "title": "DeviceInfo"
+    },
+    "FaceInfo": {
+      "type": "object",
+      "properties": {
+        "acAngle": {
+          "$ref": "#/definitions/AcAngle"
+        },
+        "acImage": {
+          "$ref": "#/definitions/AcImage"
+        },
+        "end": {
+          "$ref": "#/definitions/AcVertex"
+        },
+        "quality": {
+          "type": "number",
+          "format": "float",
+          "example": 0,
+          "description": "人脸图片质量得分"
+        },
+        "start": {
+          "$ref": "#/definitions/AcVertex"
+        },
+        "trackId": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0
+        }
+      },
+      "title": "FaceInfo"
+    },
+    "LibraryInfo": {
+      "type": "object",
+      "properties": {
+        "featureDbId": {
+          "type": "string",
+          "description": "特征库ID(底层平台返回)"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0,
+          "description": "主键"
+        },
+        "libraryName": {
+          "type": "string",
+          "description": "人像库名称"
+        },
+        "targetLibId": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0,
+          "description": "目标库I"
+        }
+      },
+      "title": "LibraryInfo"
+    },
+    "TargetInfo": {
+      "type": "object",
+      "properties": {
+        "activationDate": {
+          "type": "string",
+          "description": "激活时间- YYYY-MM-DD hh:mm:ss"
+        },
+        "aliasName": {
+          "type": "string",
+          "description": "人员别名"
+        },
+        "cardId": {
+          "type": "string",
+          "description": "人员证件号"
+        },
+        "company": {
+          "type": "string",
+          "description": "公司"
+        },
+        "dept": {
+          "type": "string",
+          "description": "dept:人员所在部门"
+        },
+        "employeeNumber": {
+          "type": "string",
+          "description": "工号"
+        },
+        "expirationDate": {
+          "type": "string",
+          "description": "过期时间- YYYY-MM-DD hh:mm:ss"
+        },
+        "gender": {
+          "type": "integer",
+          "format": "int32",
+          "example": 0,
+          "description": "人员性别"
+        },
+        "ic": {
+          "type": "string",
+          "description": "IC卡号"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "目标对象在人像库中的照片url地址"
+        },
+        "lowerCompany": {
+          "type": "string"
+        },
+        "lowerDept": {
+          "type": "string",
+          "description": "lowerDept:dept的全小写"
+        },
+        "lowerName": {
+          "type": "string",
+          "description": "name的全小写"
+        },
+        "name": {
+          "type": "string",
+          "description": "name"
+        },
+        "nation": {
+          "type": "string",
+          "description": "民族"
+        },
+        "nationality": {
+          "type": "string",
+          "description": "国籍"
+        },
+        "nativePlace": {
+          "type": "string",
+          "description": "籍贯"
+        }
+      },
+      "title": "TargetInfo"
+    }
+  }
+}

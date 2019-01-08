@@ -1,0 +1,1094 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1.0.0",
+    "title": "SenseGuard Watchlist Management API",
+    "contact": {
+      "name": "Hyatt",
+      "email": "zhangxuantao@sensetime.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Target Management Module",
+      "description": "Target Controller"
+    },
+    {
+      "name": "TargetLibrary Management Module",
+      "description": "Target Library Controller"
+    }
+  ],
+  "paths": {
+    "/api/v1/target-libraries": {
+      "get": {
+        "tags": [
+          "TargetLibrary Management Module"
+        ],
+        "summary": "查询人像库列表",
+        "operationId": "queryLibraryList",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "人像库描述",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "featureDbId",
+            "in": "query",
+            "description": "特征库ID",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "人像库ID集合",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "libImportType",
+            "in": "query",
+            "description": "人像库导入类型",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "人像库名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "每页数量",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "人像库状态",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "人像库类型",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LibraryQueryResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "TargetLibrary Management Module"
+        ],
+        "summary": "添加人像库",
+        "operationId": "addLibrary",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "libraryAddParam",
+            "description": "libraryAddParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TargetLibraryAddParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/target-libraries/count": {
+      "get": {
+        "tags": [
+          "TargetLibrary Management Module"
+        ],
+        "summary": "统计人像库数量",
+        "operationId": "queryLibraryCount",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LibraryStatistics"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/target-libraries/{libraryId}": {
+      "get": {
+        "tags": [
+          "TargetLibrary Management Module"
+        ],
+        "summary": "查询人像库详情",
+        "operationId": "queryLibraryInfo",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "libraryId",
+            "in": "path",
+            "description": "libraryId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TargetLibrary"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "TargetLibrary Management Module"
+        ],
+        "summary": "修改人像库",
+        "operationId": "updateLibrary",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "libraryId",
+            "in": "path",
+            "description": "libraryId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "TargetLibrary Management Module"
+        ],
+        "summary": "删除人像库",
+        "operationId": "deleteLibrary",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "libraryId",
+            "in": "path",
+            "description": "libraryId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/targets": {
+      "get": {
+        "tags": [
+          "Target Management Module"
+        ],
+        "summary": "查询人像列表",
+        "operationId": "queryTargets",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "creator",
+            "in": "query",
+            "description": "创建人",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "创建结束时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "featureStatus",
+            "in": "query",
+            "description": "导入状态，0失败，1成功",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "导出开始条数",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "libId",
+            "in": "query",
+            "description": "人像库ID",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "x-example": 1
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "人像名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "分页数量",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 10
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "创建开始时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "导出结束条数",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 100
+          },
+          {
+            "name": "websocketId",
+            "in": "query",
+            "description": "SocketID",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TargetQueryResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Target Management Module"
+        ],
+        "summary": "添加人像",
+        "operationId": "addTarget",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "targetParam",
+            "description": "targetParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TargetParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/targets/batch": {
+      "delete": {
+        "tags": [
+          "Target Management Module"
+        ],
+        "summary": "批量删除人像库",
+        "operationId": "batchDeleteTargets",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "targetIds",
+            "in": "query",
+            "description": "targetIds",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/targets/{targetId}": {
+      "get": {
+        "tags": [
+          "Target Management Module"
+        ],
+        "summary": "查询人像详情",
+        "operationId": "queryTargetInfo",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "targetId",
+            "in": "path",
+            "description": "targetId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Target"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Target Management Module"
+        ],
+        "summary": "修改人像",
+        "operationId": "updateTarget",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "targetId",
+            "in": "path",
+            "description": "targetId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "targetParam",
+            "description": "targetParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TargetParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Target Management Module"
+        ],
+        "summary": "删除人像",
+        "operationId": "deleteTarget",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "targetId",
+            "in": "path",
+            "description": "targetId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "LibraryQueryResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "description": "人像库列表",
+          "items": {
+            "$ref": "#/definitions/TargetLibrary"
+          }
+        }
+      },
+      "title": "LibraryQueryResponse"
+    },
+    "LibraryStatistics": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "example": 100,
+          "description": "人像库总数"
+        },
+        "error_count": {
+          "type": "integer",
+          "format": "int32",
+          "example": 5,
+          "description": "人像库导入失败数量"
+        }
+      },
+      "title": "LibraryStatistics"
+    },
+    "Target": {
+      "type": "object",
+      "properties": {
+        "activationDate": {
+          "type": "string",
+          "description": "激活时间"
+        },
+        "activeStatus": {
+          "type": "string",
+          "description": "激活状态"
+        },
+        "address": {
+          "type": "string",
+          "description": "地址"
+        },
+        "aliasName": {
+          "type": "string",
+          "description": "别名"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date",
+          "description": "出生年月"
+        },
+        "cardId": {
+          "type": "string",
+          "description": "卡号"
+        },
+        "company": {
+          "type": "string",
+          "description": "工厂"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "creator": {
+          "type": "string",
+          "description": "创建人"
+        },
+        "dept": {
+          "type": "string",
+          "description": "部门"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述"
+        },
+        "employeeNumber": {
+          "type": "string",
+          "description": "工号"
+        },
+        "errPicUrl": {
+          "type": "string",
+          "description": "特征提取失败图片url"
+        },
+        "expirationDate": {
+          "type": "string",
+          "description": "过期时间"
+        },
+        "featureErrorCode": {
+          "type": "integer",
+          "format": "int32",
+          "description": "特征提取失败错误码"
+        },
+        "featureErrorMsg": {
+          "type": "string",
+          "description": "特征提取失败原因"
+        },
+        "featureStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "特征提取状态"
+        },
+        "gender": {
+          "type": "integer",
+          "format": "int32",
+          "description": "性别"
+        },
+        "ic": {
+          "type": "string",
+          "description": "IC卡号"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像ID"
+        },
+        "identity": {
+          "type": "string",
+          "description": "证件号码"
+        },
+        "identityType": {
+          "type": "string",
+          "description": "证件类型"
+        },
+        "libraryCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像注册库总库"
+        },
+        "name": {
+          "type": "string",
+          "description": "姓名"
+        },
+        "nation": {
+          "type": "string",
+          "description": "民族"
+        },
+        "nationality": {
+          "type": "string",
+          "description": "国籍"
+        },
+        "nativePlace": {
+          "type": "string",
+          "description": "籍贯"
+        },
+        "picMd5": {
+          "type": "string",
+          "description": "图片md5"
+        },
+        "picUrl": {
+          "type": "string",
+          "description": "图片url"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        }
+      },
+      "title": "Target"
+    },
+    "TargetLibrary": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "creator": {
+          "type": "integer",
+          "format": "int64",
+          "description": "创建人"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述"
+        },
+        "featureDbId": {
+          "type": "string",
+          "description": "特征库ID"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像库标识ID"
+        },
+        "libId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像库ID"
+        },
+        "libImportType": {
+          "type": "string",
+          "description": "人像库导入类型"
+        },
+        "name": {
+          "type": "string",
+          "description": "人像库名称"
+        },
+        "realName": {
+          "type": "string",
+          "description": "用户真实姓名"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": "状态"
+        },
+        "type": {
+          "type": "string",
+          "description": "人像库类型"
+        },
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        }
+      },
+      "title": "TargetLibrary"
+    },
+    "TargetLibraryAddParam": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "creator": {
+          "type": "integer",
+          "format": "int64",
+          "description": "创建人"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述"
+        },
+        "featureDbId": {
+          "type": "string",
+          "description": "特征库ID"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像库标识ID"
+        },
+        "libId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像库ID"
+        },
+        "libImportType": {
+          "type": "string",
+          "description": "人像库导入类型"
+        },
+        "name": {
+          "type": "string",
+          "description": "人像库名称"
+        },
+        "realName": {
+          "type": "string",
+          "description": "用户真实姓名"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": "状态"
+        },
+        "type": {
+          "type": "string",
+          "description": "人像库类型"
+        },
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        }
+      },
+      "title": "TargetLibraryAddParam"
+    },
+    "TargetParam": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "description": "图片base64字符串"
+        },
+        "infoTargetLibraryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "人像库ID"
+        },
+        "target": {
+          "description": "人像信息",
+          "$ref": "#/definitions/Target"
+        }
+      },
+      "title": "TargetParam"
+    },
+    "TargetQueryResponse": {
+      "type": "object",
+      "required": [
+        "page",
+        "pagination",
+        "size",
+        "total",
+        "totalPage"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1,
+          "description": "当前页"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10,
+          "description": "每页数量"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "example": 100,
+          "description": "总记录数"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10,
+          "description": "总页数"
+        },
+        "pagination": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "是否分页，0-不分页，1-分页"
+        },
+        "data": {
+          "type": "array",
+          "description": "人像列表",
+          "items": {
+            "$ref": "#/definitions/Target"
+          }
+        }
+      },
+      "title": "TargetQueryResponse"
+    }
+  }
+}

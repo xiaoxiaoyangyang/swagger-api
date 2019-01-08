@@ -1,0 +1,663 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is timezonemanger Interface document",
+    "version" : "v2",
+    "title" : "Swagger Maven Plugin Sample",
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "localhost:10342",
+  "basePath" : "/senseguard-timezone",
+  "tags" : [ {
+    "name" : "TimeZoneManageHoliday"
+  }, {
+    "name" : "TimeZoneManageInterval"
+  }, {
+    "name" : "TimeZoneManageTimezone"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/api/v1/holidays" : {
+      "get" : {
+        "tags" : [ "TimeZoneManageHoliday" ],
+        "summary" : "查询holiDay,返回状态码",
+        "description" : "",
+        "operationId" : "holidays",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultListHolidayVO"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "TimeZoneManageHoliday" ],
+        "summary" : "添加holoday,返回状态码",
+        "description" : "",
+        "operationId" : "addHoliday",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/HolidaySearchParam"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultVoid"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/holidays/{hid}" : {
+      "delete" : {
+        "tags" : [ "TimeZoneManageHoliday" ],
+        "summary" : "删除holoday，返回状态码",
+        "description" : "",
+        "operationId" : "deleteHoliday",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "hid",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultVoid"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/intervals" : {
+      "get" : {
+        "tags" : [ "TimeZoneManageInterval" ],
+        "summary" : "interval查询,返回interval列表",
+        "description" : "",
+        "operationId" : "queryIntervals",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "timeZoneId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultListInfoIntervalTimezoneVO"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "TimeZoneManageInterval" ],
+        "summary" : "添加interval,返回操作状态",
+        "description" : "",
+        "operationId" : "addInterval",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/IntervalAddParam"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultVoid"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/timezoneExcIntervals" : {
+      "get" : {
+        "tags" : [ "TimeZoneManageTimezone" ],
+        "summary" : "TimeZone基础列表查询，返回TimeZone列表(不包含interval)",
+        "description" : "",
+        "operationId" : "queryTimezoneExceptIntervals",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultListTimeZoneListVo"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/timezones" : {
+      "get" : {
+        "tags" : [ "TimeZoneManageTimezone" ],
+        "summary" : "TimeZone查询全部，返回TimeZone列表(包含interval)",
+        "description" : "",
+        "operationId" : "queryTimezones",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultListTimeZoneViewVo"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "TimeZoneManageTimezone" ],
+        "summary" : "添加TimeZone,返回操作结果",
+        "description" : "",
+        "operationId" : "addTimezone",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/TimeZoneSearchParam"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultVoid"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/timezones/{timeZoneId}" : {
+      "put" : {
+        "tags" : [ "TimeZoneManageTimezone" ],
+        "summary" : "修改TimeZone,返回操作结果",
+        "description" : "",
+        "operationId" : "updateTimezone",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/TimeZoneSearchParam"
+          }
+        }, {
+          "name" : "timeZoneId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultVoid"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "TimeZoneManageTimezone" ],
+        "summary" : "删除TimeZone,返回操作结果",
+        "description" : "",
+        "operationId" : "deleteTimezone",
+        "parameters" : [ {
+          "name" : "accessToken",
+          "in" : "header",
+          "description" : "身份令牌",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "timeZoneId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResultVoid"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "HolidaySearchParam" : {
+      "type" : "object",
+      "required" : [ "endDate", "iden", "startDate", "type" ],
+      "properties" : {
+        "hid" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "holiday pk id"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "holiday 专属type"
+        },
+        "iden" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "0代表 节假日htype，1代表节假日工作日wtype"
+        },
+        "hdesc" : {
+          "type" : "string",
+          "description" : "描述"
+        },
+        "hdate" : {
+          "type" : "string",
+          "description" : "时间"
+        },
+        "startDate" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "开始时间"
+        },
+        "endDate" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "结束时间"
+        }
+      }
+    },
+    "HolidayVO" : {
+      "type" : "object",
+      "required" : [ "endDate", "iden", "startDate", "type" ],
+      "properties" : {
+        "hid" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "holiday pk id"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "holiday 专属type"
+        },
+        "iden" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "0代表 节假日htype，1代表节假日工作日wtype"
+        },
+        "hdesc" : {
+          "type" : "string",
+          "description" : "描述"
+        },
+        "hdate" : {
+          "type" : "string",
+          "description" : "时间"
+        },
+        "startDate" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "开始时间"
+        },
+        "endDate" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "结束时间"
+        }
+      }
+    },
+    "InfoIntervalTimezoneVO" : {
+      "type" : "object",
+      "properties" : {
+        "intervalId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "interval pk id"
+        },
+        "startTime" : {
+          "type" : "string",
+          "description" : "开始时间"
+        },
+        "endTime" : {
+          "type" : "string",
+          "description" : "开始时间"
+        },
+        "days" : {
+          "type" : "string",
+          "description" : "周日至周六，0代表关门，1代表允许开门,1110111代表周三关门"
+        },
+        "tzWtype" : {
+          "type" : "string",
+          "description" : "特殊工作日类型"
+        },
+        "tzHtype" : {
+          "type" : "string",
+          "description" : "节假日类型"
+        },
+        "remark" : {
+          "type" : "string",
+          "description" : "备注"
+        },
+        "createTime" : {
+          "type" : "string",
+          "description" : "创建时间"
+        },
+        "updateTime" : {
+          "type" : "string",
+          "description" : "更新时间"
+        }
+      }
+    },
+    "IntervalAddParam" : {
+      "type" : "object",
+      "required" : [ "days", "endTime", "startTime", "timeZoneId" ],
+      "properties" : {
+        "intervalId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "interval pk id"
+        },
+        "timeZoneId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "timeZone id"
+        },
+        "startTime" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "开始时间"
+        },
+        "endTime" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "结束时间"
+        },
+        "days" : {
+          "type" : "string",
+          "description" : "周日至周六，0代表关门，1代表允许开门,1110111代表周三关门"
+        },
+        "tzWtype" : {
+          "type" : "string",
+          "description" : "特殊工作日类型"
+        },
+        "tzHtype" : {
+          "type" : "string",
+          "description" : "节假日类型"
+        },
+        "remark" : {
+          "type" : "string",
+          "description" : "备注"
+        }
+      }
+    },
+    "ResultListHolidayVO" : {
+      "type" : "object",
+      "properties" : {
+        "success" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "errorCode" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/HolidayVO"
+          }
+        }
+      }
+    },
+    "ResultListInfoIntervalTimezoneVO" : {
+      "type" : "object",
+      "properties" : {
+        "success" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "errorCode" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/InfoIntervalTimezoneVO"
+          }
+        }
+      }
+    },
+    "ResultListTimeZoneListVo" : {
+      "type" : "object",
+      "properties" : {
+        "success" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "errorCode" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TimeZoneListVo"
+          }
+        }
+      }
+    },
+    "ResultListTimeZoneViewVo" : {
+      "type" : "object",
+      "properties" : {
+        "success" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "errorCode" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TimeZoneViewVo"
+          }
+        }
+      }
+    },
+    "ResultVoid" : {
+      "type" : "object",
+      "properties" : {
+        "success" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "errorCode" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "data" : {
+          "$ref" : "#/definitions/Void"
+        }
+      }
+    },
+    "TimeZoneListVo" : {
+      "type" : "object",
+      "properties" : {
+        "timeZoneId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "timeZone pk id"
+        },
+        "timeZoneName" : {
+          "type" : "string",
+          "description" : "timeZone name"
+        },
+        "status" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "是否默认（0非默认，1默认）"
+        },
+        "remark" : {
+          "type" : "string",
+          "description" : "备注"
+        }
+      }
+    },
+    "TimeZoneSearchParam" : {
+      "type" : "object",
+      "required" : [ "timeZoneName" ],
+      "properties" : {
+        "timeZoneId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "timeZone pk id"
+        },
+        "timeZoneName" : {
+          "type" : "string",
+          "description" : "timeZone name"
+        },
+        "status" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "是否默认（0非默认，1默认）"
+        },
+        "remark" : {
+          "type" : "string",
+          "description" : "备注"
+        }
+      }
+    },
+    "TimeZoneViewVo" : {
+      "type" : "object",
+      "properties" : {
+        "timeZoneId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "timeZone pk id"
+        },
+        "timeZoneName" : {
+          "type" : "string",
+          "description" : "timeZone name"
+        },
+        "status" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "是否默认（0非默认，1默认）"
+        },
+        "remark" : {
+          "type" : "string",
+          "description" : "备注"
+        },
+        "infoRIntervalTimezoneList" : {
+          "type" : "array",
+          "description" : "关联interval数据信息",
+          "items" : {
+            "$ref" : "#/definitions/InfoIntervalTimezoneVO"
+          }
+        }
+      }
+    },
+    "Void" : {
+      "type" : "object"
+    }
+  }
+}

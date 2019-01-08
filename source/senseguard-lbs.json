@@ -1,0 +1,736 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "TrajectoryHotController Api Document",
+    "version": "senseguard-lbs.1.0",
+    "title": "com.sensetime.fis.senseguard"
+  },
+  "host": "localhost:8888",
+  "basePath": "/senseguard-lbs",
+  "tags": [
+    {
+      "name": "SenseGuard Module",
+      "description": "Trajectory Hot Controller"
+    }
+  ],
+  "paths": {
+    "/queryHeatMap/{floorId}": {
+      "get": {
+        "tags": [
+          "SenseGuard Module"
+        ],
+        "summary": "热力图",
+        "operationId": "queryHeatMap",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "floorId",
+            "in": "path",
+            "description": "floorId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/HeatMap"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/queryLibraryTrajector/{userId}/{score}": {
+      "get": {
+        "tags": [
+          "SenseGuard Module"
+        ],
+        "summary": "人像库轨迹生成",
+        "operationId": "queryLibraryTrajector",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "score",
+            "in": "path",
+            "description": "score",
+            "required": true,
+            "type": "number",
+            "format": "float"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TotalTrajector"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/querySnapshotTrajector": {
+      "post": {
+        "tags": [
+          "SenseGuard Module"
+        ],
+        "summary": "抓拍库轨迹生成",
+        "operationId": "querySnapshotTrajector",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "searchCapture",
+            "description": "searchCapture",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchCapture"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/HeatMap"
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Acknowledge": {
+      "type": "object",
+      "properties": {
+        "operationTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "realname": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "Acknowledge"
+    },
+    "Angle": {
+      "type": "object",
+      "properties": {
+        "pitch": {
+          "type": "number",
+          "format": "float"
+        },
+        "roll": {
+          "type": "number",
+          "format": "float"
+        },
+        "yaw": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "title": "Angle"
+    },
+    "Camera": {
+      "type": "object",
+      "properties": {
+        "cameraIdx": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "code": {
+          "type": "string"
+        },
+        "groupId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "groupName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "regionId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "taskId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Camera"
+    },
+    "DetectHistory": {
+      "type": "object",
+      "properties": {
+        "acknowledge": {
+          "$ref": "#/definitions/Acknowledge"
+        },
+        "camera": {
+          "$ref": "#/definitions/Camera"
+        },
+        "capturedDate": {
+          "type": "string"
+        },
+        "capturedTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "description": {
+          "type": "string"
+        },
+        "detectStatus": {
+          "type": "string"
+        },
+        "detectType": {
+          "type": "string",
+          "enum": [
+            "ACCESS_GRANTED",
+            "INVALID_ACCESS_LEVEL",
+            "UNKNOWN",
+            "UNAUTHORIZED_TIMEZONE",
+            "EXPIRED_BADGE"
+          ]
+        },
+        "face": {
+          "$ref": "#/definitions/Face"
+        },
+        "image": {
+          "$ref": "#/definitions/Image"
+        },
+        "msgType": {
+          "type": "string",
+          "enum": [
+            "MATCH",
+            "STRANGER",
+            "NON_BODY_DETECT",
+            "PASSWD_ERROR",
+            "INACTIVE",
+            "TRACK_END",
+            "UNRECOGNIZED"
+          ]
+        },
+        "receivedDate": {
+          "type": "string"
+        },
+        "receivedTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "score": {
+          "type": "number",
+          "format": "float"
+        },
+        "serial": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/definitions/Target"
+        },
+        "targetLibrary": {
+          "$ref": "#/definitions/TargetLibrary"
+        },
+        "task": {
+          "$ref": "#/definitions/Task"
+        },
+        "viewStatus": {
+          "type": "string"
+        },
+        "viperCapturedTime": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "DetectHistory"
+    },
+    "Face": {
+      "type": "object",
+      "properties": {
+        "angle": {
+          "$ref": "#/definitions/Angle"
+        },
+        "end": {
+          "$ref": "#/definitions/Vertex"
+        },
+        "portraitImage": {
+          "$ref": "#/definitions/PortraitImage"
+        },
+        "quality": {
+          "type": "number",
+          "format": "float"
+        },
+        "start": {
+          "$ref": "#/definitions/Vertex"
+        },
+        "trackId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Face"
+    },
+    "FloorTrajector": {
+      "type": "object",
+      "properties": {
+        "floorId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "楼层"
+        },
+        "listCapture": {
+          "type": "array",
+          "description": "楼层下抓拍数据的集合",
+          "items": {
+            "$ref": "#/definitions/DetectHistory"
+          }
+        },
+        "listHeatMap": {
+          "type": "array",
+          "description": "楼层各个设备对应的抓拍数",
+          "items": {
+            "$ref": "#/definitions/HeatMap"
+          }
+        }
+      },
+      "title": "FloorTrajector"
+    },
+    "HeatMap": {
+      "type": "object",
+      "properties": {
+        "deviceId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "摄像头的id"
+        },
+        "peopleNumber": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抓拍的人数"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32",
+          "description": "设备的类型"
+        }
+      },
+      "title": "HeatMap"
+    },
+    "Image": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "url": {
+          "type": "string"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Image"
+    },
+    "PortraitImage": {
+      "type": "object",
+      "properties": {
+        "end": {
+          "$ref": "#/definitions/Vertex"
+        },
+        "start": {
+          "$ref": "#/definitions/Vertex"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "title": "PortraitImage"
+    },
+    "SearchCapture": {
+      "type": "object",
+      "required": [
+        "captureTimeEnd",
+        "captureTimeStart",
+        "enabledCamera",
+        "enabledKeeper",
+        "imageFaceBase64",
+        "similarity"
+      ],
+      "properties": {
+        "cameraIds": {
+          "type": "array",
+          "description": "摄像机Id的集合",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "captureTimeEnd": {
+          "type": "string",
+          "description": "结束时间"
+        },
+        "captureTimeStart": {
+          "type": "string",
+          "description": "起始时间"
+        },
+        "enabledCamera": {
+          "type": "string",
+          "description": "是否启用"
+        },
+        "enabledKeeper": {
+          "type": "string",
+          "description": "是否启用"
+        },
+        "faceDatabase": {
+          "type": "array",
+          "description": "人像库id的集合",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "imageFaceBase64": {
+          "type": "string",
+          "description": "照片的base64"
+        },
+        "senseKeeperIds": {
+          "type": "array",
+          "description": "keeper Id的集合",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "similarity": {
+          "type": "number",
+          "description": "过滤的分值"
+        }
+      },
+      "title": "SearchCapture"
+    },
+    "Target": {
+      "type": "object",
+      "properties": {
+        "activationDate": {
+          "type": "string"
+        },
+        "activeStatus": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "aliasname": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "cardId": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "dept": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "employeeNumber": {
+          "type": "string"
+        },
+        "errPicUrl": {
+          "type": "string"
+        },
+        "expirationDate": {
+          "type": "string"
+        },
+        "featureErrorCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "featureErrorMsg": {
+          "type": "string"
+        },
+        "featureStatus": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "gender": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ic": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "identityType": {
+          "type": "string"
+        },
+        "lowerCompany": {
+          "type": "string"
+        },
+        "lowerDept": {
+          "type": "string"
+        },
+        "lowerName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nation": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "nativePlace": {
+          "type": "string"
+        },
+        "picMd5": {
+          "type": "string"
+        },
+        "picUrl": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "Target"
+    },
+    "TargetLibrary": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creator": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "description": {
+          "type": "string"
+        },
+        "featureDbId": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "realname": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "targetLibId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "targetLibImportType": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "TargetLibrary"
+    },
+    "Task": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creator": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "deviceId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "deviceType": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "platformTaskId": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "runStatus": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "taskType": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "float"
+        },
+        "videoTaskId": {
+          "type": "string"
+        }
+      },
+      "title": "Task"
+    },
+    "TotalTrajector": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "时间"
+        },
+        "floorTrajector": {
+          "type": "array",
+          "description": "各个楼层的轨迹",
+          "items": {
+            "$ref": "#/definitions/FloorTrajector"
+          }
+        }
+      },
+      "title": "TotalTrajector"
+    },
+    "Vertex": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "y": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Vertex"
+    }
+  }
+}

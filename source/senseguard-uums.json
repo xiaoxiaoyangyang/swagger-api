@@ -1,0 +1,2060 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1.0.0",
+    "title": "SenseGuard UUMS API",
+    "contact": {
+      "name": "Hyatt",
+      "email": "zhangxuantao@sensetime.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Organization Management Module",
+      "description": "Organization Controller"
+    },
+    {
+      "name": "Role Management Module",
+      "description": "Role Controller"
+    },
+    {
+      "name": "User Management Module",
+      "description": "User Controller"
+    }
+  ],
+  "paths": {
+    "/api/v1/orgs": {
+      "get": {
+        "tags": [
+          "Organization Management Module"
+        ],
+        "summary": "查询部门列表",
+        "operationId": "queryOrgs",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "number",
+            "in": "query",
+            "description": "记录数,默认25",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orgName",
+            "in": "query",
+            "description": "部门名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码，默认1",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagination",
+            "in": "query",
+            "description": "是否分页，默认1，0-不分页，1-分页",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "parentOrgId",
+            "in": "query",
+            "description": "父级部门id 查询全部一级部门",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryResultPageVo"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Organization Management Module"
+        ],
+        "summary": "添加部门",
+        "operationId": "addOrg",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "createOrgParam",
+            "description": "createOrgParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateOrgParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/orgs/{orgId}": {
+      "get": {
+        "tags": [
+          "Organization Management Module"
+        ],
+        "summary": "查询单个部门详情",
+        "operationId": "queryOrgInfo",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "orgId",
+            "in": "path",
+            "description": "orgId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OrganizationResultVo"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Organization Management Module"
+        ],
+        "summary": "修改部门",
+        "operationId": "updateOrg",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "createOrgParam",
+            "description": "createOrgParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateOrgParam"
+            }
+          },
+          {
+            "name": "orgId",
+            "in": "path",
+            "description": "orgId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Organization Management Module"
+        ],
+        "summary": "删除部门",
+        "operationId": "deleteOrg",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "createOrgParam",
+            "description": "createOrgParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateOrgParam"
+            }
+          },
+          {
+            "name": "orgId",
+            "in": "path",
+            "description": "orgId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/orgs/{orgId}/users": {
+      "get": {
+        "tags": [
+          "Organization Management Module"
+        ],
+        "summary": "查询部门对应的用户列表",
+        "operationId": "queryUsersByOrgId",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "orgId",
+            "in": "path",
+            "description": "orgId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserQueryResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/roles": {
+      "get": {
+        "tags": [
+          "Role Management Module"
+        ],
+        "summary": "查询角色列表",
+        "operationId": "queryRoles",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "description": "搜索关键字[角色名]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "number",
+            "in": "query",
+            "description": "记录数,默认25",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码，默认1",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagination",
+            "in": "query",
+            "description": "是否分页，默认1，0-不分页，1-分页",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "roleName",
+            "in": "query",
+            "description": "角色名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "创建时间排序，默认降序排列desc，升序传入asc",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "角色状态.1-启用，2-禁用，3-删除,默认查询1，2",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryResultPageVo"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Result"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Result"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Role Management Module"
+        ],
+        "summary": "添加角色",
+        "operationId": "addRole",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "createRoleParam",
+            "description": "createRoleParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateRoleParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/roles/{roleId}": {
+      "put": {
+        "tags": [
+          "Role Management Module"
+        ],
+        "summary": "修改角色",
+        "operationId": "updateRole",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "roleId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "updateRoleParam",
+            "description": "updateRoleParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateRoleParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Role Management Module"
+        ],
+        "summary": "删除角色",
+        "operationId": "deleteRole",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "roleId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/roles/{roleId}/change_state": {
+      "put": {
+        "tags": [
+          "Role Management Module"
+        ],
+        "summary": "启动/禁用角色",
+        "operationId": "changeRoleState",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "roleId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "state",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/roles/{roleId}/permissions": {
+      "get": {
+        "tags": [
+          "Role Management Module"
+        ],
+        "summary": "查询角色对应权限列表",
+        "operationId": "queryPermissionsByRole",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "roleId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryResultPageVo"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Result"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Result"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "查询用户列表",
+        "operationId": "queryUsers",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identityId",
+            "in": "query",
+            "description": "身份证号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "description": "搜索关键字[用户名]",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "每页数量，默认=25",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "description": "部门id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码，默认=1",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagination",
+            "in": "query",
+            "description": "是否分页，默认1，0-不分页，1-分页",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "realName",
+            "in": "query",
+            "description": "用户名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "in": "query",
+            "description": "角色Id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "用户状态.1-启用，2-禁用，3-删除,默认查询1，2",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "userName",
+            "in": "query",
+            "description": "帐号",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/QueryUserResutVo"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "添加用户",
+        "operationId": "addUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "createUserParam",
+            "description": "createUserParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateUserParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/users/device": {
+      "post": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "添加用户设备",
+        "operationId": "addUserDevice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "userDeviceParam",
+            "description": "userDeviceParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDeviceParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "修改用户设备",
+        "operationId": "updateUserDevcie",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "userDeviceParam",
+            "description": "userDeviceParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDeviceParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/users/devices": {
+      "get": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "查询用户设备列表",
+        "operationId": "queryUsersDevices",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cameraString",
+            "in": "query",
+            "description": "cameraString",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "carema",
+            "in": "query",
+            "description": "设备信息：carema json串",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "caremaIds",
+            "in": "query",
+            "description": "caremaIds",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "editType",
+            "in": "query",
+            "description": "editType",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "keeper",
+            "in": "query",
+            "description": "设备信息：keeper json串",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "keeperIds",
+            "in": "query",
+            "description": "keeperIds",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "keeperString",
+            "in": "query",
+            "description": "keeperString",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "userId",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserDeviceQueryResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/users/devices/{deviceId}": {
+      "get": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "根据设备ID查询在线用户列表",
+        "operationId": "queryUsersByDeviceId",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "deviceId",
+            "in": "path",
+            "description": "deviceId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserDeviceResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/users/{userId}": {
+      "put": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "修改用户",
+        "operationId": "updateUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "updateUserParam",
+            "description": "updateUserParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateUserParam"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "删除用户",
+        "operationId": "deleteUser",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/users/{userId}/change_pwd": {
+      "put": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "修改用户密码",
+        "operationId": "changeUserPassword",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "userPwdParam",
+            "description": "userPwdParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserPwdParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/users/{userId}/change_state": {
+      "put": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "启用/禁用用户",
+        "operationId": "changeUserState",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "state",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/users/{userId}/reset_pwd": {
+      "put": {
+        "tags": [
+          "User Management Module"
+        ],
+        "summary": "重置用户密码",
+        "operationId": "resetUserPassword",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "header",
+            "description": "accessToken",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "userPwdParam",
+            "description": "userPwdParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserPwdParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "CreateOrgParam": {
+      "type": "object",
+      "properties": {
+        "abbreviation": {
+          "type": "string",
+          "description": "简称"
+        },
+        "organCode": {
+          "type": "string",
+          "description": "部门代码"
+        },
+        "organName": {
+          "type": "string",
+          "description": "部门名称"
+        },
+        "parentOrgId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "父级部门id"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        },
+        "totalNum": {
+          "type": "integer",
+          "format": "int32",
+          "description": "可创建用户数"
+        }
+      },
+      "title": "CreateOrgParam"
+    },
+    "CreateRoleParam": {
+      "type": "object",
+      "required": [
+        "roleName"
+      ],
+      "properties": {
+        "permissionCodes": {
+          "type": "array",
+          "description": "权限Code列表,空表示没有权限[删除所有权限]",
+          "items": {
+            "type": "string"
+          }
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注[功能权限]"
+        },
+        "roleName": {
+          "type": "string",
+          "description": "角色名称"
+        },
+        "userNum": {
+          "type": "integer",
+          "format": "int32",
+          "description": "用户数,默认0"
+        }
+      },
+      "title": "CreateRoleParam"
+    },
+    "CreateUserParam": {
+      "type": "object",
+      "properties": {
+        "carema": {
+          "type": "string",
+          "description": "用户carema设备"
+        },
+        "gender": {
+          "type": "integer",
+          "format": "int32",
+          "description": "性别，1-男，0-女，默认0"
+        },
+        "jobInfo": {
+          "type": "string",
+          "description": "岗位"
+        },
+        "keeper": {
+          "type": "string",
+          "description": "用户keeper设备"
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "部门id"
+        },
+        "password": {
+          "type": "string",
+          "description": "密码[新建用户都是默认密码，可不传]"
+        },
+        "permissonCodes": {
+          "type": "array",
+          "description": "权限code列表",
+          "items": {
+            "type": "string"
+          }
+        },
+        "phone": {
+          "type": "string",
+          "description": "电话号码"
+        },
+        "realName": {
+          "type": "string",
+          "description": "用户名称"
+        },
+        "roleIds": {
+          "type": "array",
+          "description": "角色id列表",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "serial": {
+          "type": "string",
+          "description": "编号[警号]"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32",
+          "description": "用户类型"
+        },
+        "userName": {
+          "type": "string",
+          "description": "账户"
+        }
+      },
+      "title": "CreateUserParam"
+    },
+    "OrganizationResultVo": {
+      "type": "object",
+      "properties": {
+        "abbreviation": {
+          "type": "string",
+          "description": "简称"
+        },
+        "code": {
+          "type": "string",
+          "description": "代码"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "createdNum": {
+          "type": "integer",
+          "format": "int32",
+          "description": "本部门已创建用户数"
+        },
+        "creatorName": {
+          "type": "string",
+          "description": "创建人"
+        },
+        "name": {
+          "type": "string",
+          "description": "部门名称"
+        },
+        "organId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "部门id"
+        },
+        "parentId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "父级部门id"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        },
+        "subOrgNum": {
+          "type": "integer",
+          "format": "int64",
+          "description": "下一级部门数量"
+        },
+        "totalNum": {
+          "type": "integer",
+          "format": "int32",
+          "description": "本部门可创建用户数"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "更新时间"
+        },
+        "updateUserName": {
+          "type": "string",
+          "description": "更新人"
+        },
+        "userNum": {
+          "type": "integer",
+          "format": "int32",
+          "description": "本部门以及下级部门用户数"
+        }
+      },
+      "title": "OrganizationResultVo"
+    },
+    "QueryResultPageVo": {
+      "type": "object",
+      "required": [
+        "pagination"
+      ],
+      "properties": {
+        "currentPage": {
+          "type": "integer",
+          "format": "int64",
+          "description": "当前页"
+        },
+        "list": {
+          "type": "array",
+          "description": "返回列表数据",
+          "items": {
+            "type": "object"
+          }
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64",
+          "description": "每页大小"
+        },
+        "pagination": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "是否分页，0-不分页，1-分页，默认分页"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": "总记录数"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64",
+          "description": "总页数"
+        }
+      },
+      "title": "QueryResultPageVo"
+    },
+    "QueryUserResutVo": {
+      "type": "object",
+      "properties": {
+        "createDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "creatorName": {
+          "type": "string",
+          "description": "创建人"
+        },
+        "first": {
+          "type": "integer",
+          "format": "int32",
+          "description": "是否首次登录"
+        },
+        "loadIpLast": {
+          "type": "string",
+          "description": "上次登录IP"
+        },
+        "loadIpNow": {
+          "type": "string",
+          "description": "本次登录IP"
+        },
+        "loadLast": {
+          "type": "string",
+          "format": "date-time",
+          "description": "最后登陆时间"
+        },
+        "loadNow": {
+          "type": "string",
+          "format": "date-time",
+          "description": "本次登陆时间"
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "部门id"
+        },
+        "organization": {
+          "description": "部门信息",
+          "$ref": "#/definitions/OrganizationResultVo"
+        },
+        "phone": {
+          "type": "string",
+          "description": "电话号码"
+        },
+        "realName": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注"
+        },
+        "roles": {
+          "type": "array",
+          "description": "角色信息列表",
+          "items": {
+            "$ref": "#/definitions/RoleResutlVo"
+          }
+        },
+        "serial": {
+          "type": "string",
+          "description": "编号[例如:警号]"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32",
+          "description": "状态,1-正常，2-禁用，3-删除"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32",
+          "description": "类型"
+        },
+        "unit": {
+          "type": "string",
+          "description": "单位"
+        },
+        "updateDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "更新时间"
+        },
+        "updateUserName": {
+          "type": "string",
+          "description": "更新人"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "userId"
+        },
+        "userName": {
+          "type": "string",
+          "description": "登录名"
+        }
+      },
+      "title": "QueryUserResutVo"
+    },
+    "Result": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "title": "Result"
+    },
+    "RoleResutlVo": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "creatorName": {
+          "type": "string",
+          "description": "创建人"
+        },
+        "remark": {
+          "type": "string",
+          "description": "功能权限"
+        },
+        "roleCode": {
+          "type": "string",
+          "description": "角色代码"
+        },
+        "roleId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "角色id"
+        },
+        "roleName": {
+          "type": "string",
+          "description": "角色名称"
+        },
+        "roleState": {
+          "type": "integer",
+          "format": "int32",
+          "description": "状态,1-启用，2-禁用，3-删除"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "更新时间"
+        },
+        "updateUserName": {
+          "type": "string",
+          "description": "更新人"
+        },
+        "userNum": {
+          "type": "integer",
+          "format": "int32",
+          "description": "该角色使用的用户数"
+        }
+      },
+      "title": "RoleResutlVo"
+    },
+    "SimpleUserVo": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string",
+          "description": "用户票据"
+        }
+      },
+      "title": "SimpleUserVo"
+    },
+    "UserDeviceParam": {
+      "type": "object",
+      "properties": {
+        "cameraString": {
+          "type": "string",
+          "description": "cameraString"
+        },
+        "carema": {
+          "type": "string",
+          "description": "设备信息：carema json串"
+        },
+        "caremaIds": {
+          "type": "array",
+          "description": "caremaIds",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "editType": {
+          "type": "integer",
+          "format": "int32",
+          "description": "editType"
+        },
+        "keeper": {
+          "type": "string",
+          "description": "设备信息：keeper json串"
+        },
+        "keeperIds": {
+          "type": "array",
+          "description": "keeperIds",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "keeperString": {
+          "type": "string",
+          "description": "keeperString"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "userId"
+        }
+      },
+      "title": "UserDeviceParam"
+    },
+    "UserDeviceQueryResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "description": "用户设备列表",
+          "items": {
+            "$ref": "#/definitions/UserDeviceVo"
+          }
+        }
+      },
+      "title": "UserDeviceQueryResponse"
+    },
+    "UserDeviceResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "用户票据列表",
+          "items": {
+            "$ref": "#/definitions/SimpleUserVo"
+          }
+        }
+      },
+      "title": "UserDeviceResponse"
+    },
+    "UserDeviceVo": {
+      "type": "object",
+      "properties": {
+        "camera": {
+          "type": "string",
+          "description": "设备信息：camera json串"
+        },
+        "cameraCnt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "cameraCnt"
+        },
+        "caremaIds": {
+          "type": "array",
+          "description": "caremaIds",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "keeper": {
+          "type": "string",
+          "description": "设备信息：keeper json串"
+        },
+        "keeperCnt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "keeperCnt"
+        },
+        "keeperIds": {
+          "type": "array",
+          "description": "keeperIds",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "tokens": {
+          "type": "array",
+          "description": "设备登录用户tokens",
+          "items": {
+            "type": "string"
+          }
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "userId"
+        }
+      },
+      "title": "UserDeviceVo"
+    },
+    "UserPwdParam": {
+      "type": "object",
+      "properties": {
+        "first": {
+          "type": "integer",
+          "format": "int32",
+          "description": "是否首次"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "userId"
+        },
+        "loadIpNow": {
+          "type": "string",
+          "description": "本次登录IP"
+        },
+        "newPassword": {
+          "type": "string",
+          "description": "新密码"
+        },
+        "oldPassword": {
+          "type": "string",
+          "description": "旧密码"
+        }
+      },
+      "title": "UserPwdParam"
+    },
+    "UserQueryResponse": {
+      "type": "object",
+      "required": [
+        "page",
+        "pagination",
+        "size",
+        "total",
+        "totalPage"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1,
+          "description": "当前页"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10,
+          "description": "每页数量"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "example": 100,
+          "description": "总记录数"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10,
+          "description": "总页数"
+        },
+        "pagination": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "description": "是否分页，0-不分页，1-分页"
+        },
+        "data": {
+          "type": "array",
+          "description": "用户列表",
+          "items": {
+            "$ref": "#/definitions/QueryUserResutVo"
+          }
+        }
+      },
+      "title": "UserQueryResponse"
+    }
+  }
+}

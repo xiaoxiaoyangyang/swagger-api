@@ -1,0 +1,429 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample.",
+    "version": "v1",
+    "title": "Swagger Maven Plugin Sample",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:10120",
+  "basePath": "/senseguard-oauth2",
+  "tags": [
+    {
+      "name": "Check Authentication Module"
+    },
+    {
+      "name": "OSG-ImageController"
+    },
+    {
+      "name": "SenseGuard-Oauth2 Modle"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/checkLdapUserPwd": {
+      "post": {
+        "tags": [
+          "SenseGuard-Oauth2 Modle"
+        ],
+        "summary": "校验LDAP用户密码",
+        "description": "",
+        "operationId": "checkLdapUserPwd",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/LoginVo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/ldapLogin": {
+      "post": {
+        "tags": [
+          "SenseGuard-Oauth2 Modle"
+        ],
+        "summary": "LDAP用户登入",
+        "description": "",
+        "operationId": "ldapLogin",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/LoginVo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "SenseGuard-Oauth2 Modle"
+        ],
+        "summary": "用户登入",
+        "description": "",
+        "operationId": "login",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/LoginVo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "SenseGuard-Oauth2 Modle"
+        ],
+        "summary": "用户登出",
+        "description": "",
+        "operationId": "logout",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/LogoutVo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/osg/images/{bucket}/{uri}/{accessToken}": {
+      "get": {
+        "tags": [
+          "OSG-ImageController"
+        ],
+        "summary": "OSG 图片 Token验证",
+        "description": "",
+        "operationId": "remote_image",
+        "parameters": [
+          {
+            "name": "bucket",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/userInfo": {
+      "get": {
+        "tags": [
+          "Check Authentication Module"
+        ],
+        "summary": "获取用户信息",
+        "description": "",
+        "operationId": "userInfo",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "access_token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "suscess",
+            "schema": {
+              "$ref": "#/definitions/UserInfoExt"
+            }
+          },
+          "400": {
+            "description": "fail"
+          }
+        }
+      }
+    },
+    "/validate": {
+      "post": {
+        "tags": [
+          "Check Authentication Module"
+        ],
+        "summary": "校验票据",
+        "description": "",
+        "operationId": "validate",
+        "produces": [
+          "application/json;charset=UTF-8"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ValidateVo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "fail"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "LoginVo": {
+      "type": "object",
+      "required": [
+        "password",
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": "密码"
+        }
+      }
+    },
+    "LogoutVo": {
+      "type": "object",
+      "required": [
+        "accessToken"
+      ],
+      "properties": {
+        "accessToken": {
+          "type": "string",
+          "description": "用户票据"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "用户id"
+        }
+      }
+    },
+    "UserInfoExt": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lastLoginTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastLoginIp": {
+          "type": "string"
+        },
+        "firstLogin": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "createBy": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updateBy": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "pwdErrNum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lockTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "accessToken": {
+          "type": "string",
+          "description": "用户票据"
+        },
+        "expires": {
+          "type": "integer",
+          "format": "int64",
+          "description": "票据有效期"
+        },
+        "orgName": {
+          "type": "string",
+          "description": "所属组织名称"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "用户头像URL"
+        },
+        "roles": {
+          "type": "array",
+          "description": "用户角色列表",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "first": {
+          "type": "integer",
+          "format": "int32",
+          "description": "是否首次登陆"
+        },
+        "permissionIds": {
+          "type": "array",
+          "description": "用户权限id列表",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "permissionCodes": {
+          "type": "array",
+          "description": "用户权限code列表",
+          "items": {
+            "type": "string"
+          }
+        },
+        "creatorPath": {
+          "type": "string",
+          "description": "创建者路径"
+        },
+        "modulePermissionCodes": {
+          "type": "object",
+          "description": "模块用户权限code列表",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ValidateVo": {
+      "type": "object",
+      "required": [
+        "accessToken"
+      ],
+      "properties": {
+        "accessToken": {
+          "type": "string",
+          "description": "用户票据"
+        }
+      }
+    }
+  }
+}
